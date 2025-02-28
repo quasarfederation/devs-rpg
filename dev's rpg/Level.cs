@@ -63,5 +63,10 @@ namespace dev_s_rpg
             }
         }
 
+        public int[,] GetMap()
+        {
+            return levelMap;
+        }
+
     }
 }
