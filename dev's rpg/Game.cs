@@ -6,27 +6,16 @@ using System.Threading.Tasks;
 
 namespace dev_s_rpg
 {
-    internal class Game
+    internal static class Game
     {
-        private List<Level> levels = new List<Level>();
-        private Level DebugLevel = new Level();
-        private float globalDifficulty;
-        public bool stopGame = false;
-        private ConsoleKey input;
+        private static Level debugLevel = new Level();
 
-        public Game(float _globalDifficulty)
+        //just here to debug the whole level thing
+        public static void TestMethod()
         {
-            globalDifficulty = _globalDifficulty;
+            debugLevel.LoadMap("debuglevel.map");
+            debugLevel.RenderLevel();
         }
 
-        public void GameLoop()
-        {
-            while (!stopGame)
-            {
-                DebugLevel.RenderLevel();
-                Console.ReadKey();
-                Console.Clear();
-            }
-        }
     }
 }

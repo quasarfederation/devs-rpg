@@ -8,30 +8,60 @@ namespace dev_s_rpg
 {
     internal class Level
     {
-        private string[,] levelMap =
+        // These are ascii codes, not the actual number
+        private const int EMPTY_SPACE = 48;
+        private const int SIDE_BARRIER = 49;
+        private const int VERT_BARRIER = 50;
+        private const int DEBUG_OBSTACLE = 51;
+
+        private const int LEVELMAPHEIGHT = 20;
+        private const int LEVELMAPWIDTH = 120;
+
+
+        private int[,] levelMap = new int[LEVELMAPHEIGHT, LEVELMAPWIDTH];
+
+        public void RenderLevel()
         {
-            { "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-\n" },
-            { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|\n" },
-            { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|\n" },
-            { "|", "E", " ", "M", " ", "P", " ", "T", " ", "Y", "!", " ", " ", "E", " ", "M", " ", "P", " ", "T", " ", "Y", "!", " ", " ", "E", " ", "M", " ", "P", " ", "T", " ", "Y", "!", " ", " ", "E", " ", "M", " ", "P", " ", "T", " ", "Y", "!", "|\n" },
-            { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|\n" },
-            { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|\n" },
-            { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|\n" },
-            { "|", "E", " ", "M", " ", "P", " ", "T", " ", "Y", "!", " ", " ", "E", " ", "M", " ", "P", " ", "T", " ", "Y", "!", " ", " ", "E", " ", "M", " ", "P", " ", "T", " ", "Y", "!", " ", " ", "E", " ", "M", " ", "P", " ", "T", " ", "Y", "!", "|\n" },
-            { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|\n" },
-            { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|\n" },
-            { "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-\n" } 
-        };
-
-
-
-        // written just as a test, please rewrite and make this more flexible
-       public void RenderLevel()
-        {
-            foreach (string cell in levelMap)
+            for (int i = 0; i < LEVELMAPHEIGHT; i++)
             {
-                Console.Write(cell);
+                for (int j = 0; j < LEVELMAPWIDTH; j++)
+                {
+                    switch (levelMap[i, j])
+                    {
+                        case EMPTY_SPACE:
+                            Console.Write(" "); 
+                            break;
+                        case SIDE_BARRIER:
+                            Console.Write("|");
+                            break;
+                        case VERT_BARRIER:
+                            Console.Write("-");
+                            break;
+                        case DEBUG_OBSTACLE:
+                            Console.Write("=");
+                            break;
+                        default:
+                            throw new Exception("Map identifier not recognized");
+                    }
+                }
+                Console.WriteLine();
             }
         }
+
+        public void LoadMap(string mapFile)
+        {
+            using (StreamReader saveReader = new StreamReader(@"maps\" + mapFile))
+            {
+                for (int i = 0; i < LEVELMAPHEIGHT; i++)
+                {
+                    for (int j = 0; j < LEVELMAPWIDTH; j++)
+                    {
+                        levelMap[i, j] = saveReader.Read();
+                    }
+                    saveReader.ReadLine();
+                }
+            }
+        }
+
     }
 }

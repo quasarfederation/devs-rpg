@@ -4,8 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Game rpgGame = new Game(1);
-            rpgGame.GameLoop();
+            Game.TestMethod();
         }
     }
 }
