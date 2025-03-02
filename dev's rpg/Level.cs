@@ -12,13 +12,19 @@ namespace dev_s_rpg
         private const int EMPTY_SPACE = 48;
         private const int SIDE_BARRIER = 49;
         private const int VERT_BARRIER = 50;
-        private const int DEBUG_OBSTACLE = 51;
+
+        private const int PLAYER_HEAD = 51;
+        private const int PLAYER_BODY = 52;
+        private const int PLAYER_FEET = 53;
+        private const int PLAYER_LARM = 54;
+        private const int PLAYER_RARM = 55;
+
 
         private const int LEVELMAPHEIGHT = 20;
         private const int LEVELMAPWIDTH = 120;
 
 
-        private int[,] levelMap = new int[LEVELMAPHEIGHT, LEVELMAPWIDTH];
+        public int[,] levelMap = new int[LEVELMAPHEIGHT, LEVELMAPWIDTH];
 
         public void RenderLevel()
         {
@@ -37,11 +43,29 @@ namespace dev_s_rpg
                         case VERT_BARRIER:
                             Console.Write("-");
                             break;
-                        case DEBUG_OBSTACLE:
-                            Console.Write("=");
+                        case PLAYER_BODY:
+                            Console.Write("|");
+                            break;
+                        case PLAYER_FEET:
+                            Console.Write("^");
+                            break;
+                        case PLAYER_LARM:
+                            Console.Write("/");
+                            break;
+                        case PLAYER_RARM:
+                            Console.Write("\\");
                             break;
                         default:
-                            throw new Exception("Map identifier not recognized");
+                            break;
+                    }
+
+                    if (levelMap[i, j] == PLAYER_HEAD)
+                    {
+                        Console.Write("O");
+                        levelMap[i + 1, j] = PLAYER_BODY;
+                        levelMap[i + 1, j + 1] = PLAYER_RARM;
+                        levelMap[i + 1, j - 1] = PLAYER_LARM;
+                        levelMap[i + 2, j] = PLAYER_FEET;
                     }
                 }
                 Console.WriteLine();
@@ -61,11 +85,6 @@ namespace dev_s_rpg
                     saveReader.ReadLine();
                 }
             }
-        }
-
-        public int[,] GetMap()
-        {
-            return levelMap;
         }
 
     }
