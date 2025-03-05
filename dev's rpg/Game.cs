@@ -8,13 +8,20 @@ namespace dev_s_rpg
 {
     internal static class Game
     {
-        private static Level debugLevel = new Level();
+        private static Level currentLevel = new Level();
 
         //just here to debug the whole level thing
         public static void TestMethod()
         {
-            debugLevel.LoadMap("debuglevel.map");
-            debugLevel.RenderLevel();
+            currentLevel.LoadMap("debuglevel.map");
+            Player player = new Player();
+            player.DrawPlayer();
+            currentLevel.RenderLevel();
+        }
+
+        public static int[,] GetLevelMap()
+        {
+            return currentLevel.levelMap;
         }
 
     }

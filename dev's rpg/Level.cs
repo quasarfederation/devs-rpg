@@ -13,11 +13,11 @@ namespace dev_s_rpg
         private const int SIDE_BARRIER = 49;
         private const int VERT_BARRIER = 50;
 
-        private const int PLAYER_HEAD = 51;
-        private const int PLAYER_BODY = 52;
-        private const int PLAYER_FEET = 53;
-        private const int PLAYER_LARM = 54;
-        private const int PLAYER_RARM = 55;
+        public static readonly int PLAYER_HEAD = 51;
+        public static readonly int PLAYER_BODY = 52;
+        public static readonly int PLAYER_FEET = 53;
+        public static readonly int PLAYER_LARM = 54;
+        public static readonly int PLAYER_RARM = 55;
 
 
         private const int LEVELMAPHEIGHT = 20;
@@ -43,29 +43,20 @@ namespace dev_s_rpg
                         case VERT_BARRIER:
                             Console.Write("-");
                             break;
-                        case PLAYER_BODY:
+                        case 52:
                             Console.Write("|");
                             break;
-                        case PLAYER_FEET:
+                        case 53:
                             Console.Write("^");
                             break;
-                        case PLAYER_LARM:
+                        case 54:
                             Console.Write("/");
                             break;
-                        case PLAYER_RARM:
+                        case 55:
                             Console.Write("\\");
                             break;
                         default:
                             break;
-                    }
-
-                    if (levelMap[i, j] == PLAYER_HEAD)
-                    {
-                        Console.Write("O");
-                        levelMap[i + 1, j] = PLAYER_BODY;
-                        levelMap[i + 1, j + 1] = PLAYER_RARM;
-                        levelMap[i + 1, j - 1] = PLAYER_LARM;
-                        levelMap[i + 2, j] = PLAYER_FEET;
                     }
                 }
                 Console.WriteLine();
